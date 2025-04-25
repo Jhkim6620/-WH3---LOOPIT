@@ -1,121 +1,131 @@
-완벽하게 요구사항 충족하도록 아래처럼 작성된 `README.md` 를 사용하시면 됩니다. 이미 public 레포지토리에 업로드하셨으니 이걸 붙여넣기만 하면 끝이에요 ✅
+
 
 ---
 
 ```markdown
-# 🛍️ LoopIt - 중고 거래 플랫폼
+<h1 align="center">🛍️ LoopIt</h1>
+<p align="center">
+  중고 거래 플랫폼 with 실시간 채팅 💬
+</p>
 
-LoopIt은 사용자 간 **중고 물품을 거래**할 수 있는 웹 기반 플랫폼입니다.  
-**상품 등록, 실시간 채팅, 마이페이지**, 그리고 사용자 인증까지 모든 기능을 갖추고 있습니다.
+<p align="center">
+  <img src="https://img.shields.io/badge/Frontend-React-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Backend-Django-green?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Realtime-WebSocket-ff69b4?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Database-SQLite-lightgrey?style=flat-square"/>
+</p>
 
 ---
 
-## 📁 프로젝트 구조
+## 📌 프로젝트 소개
+
+**LoopIt**은 사용자 간 중고 물품을 등록하고  
+**실시간 채팅**으로 거래를 진행할 수 있는 웹 플랫폼입니다.  
+
+
+---
+
+## 📁 폴더 구조
 
 ```
 LOOPIT/
-├── backend/         # Django REST API 서버
-├── frontend/        # React 기반 사용자 인터페이스
+├── backend/          # Django 기반 API 서버
+├── frontend/         # React 기반 사용자 인터페이스
 └── README.md
 ```
 
 ---
 
-## 🌐 배포 방식
+## ⚙️ 실행 방법
 
-- GitHub Repository: [https://github.com/Jhkim6620/-WH3---LOOPIT](https://github.com/Jhkim6620/-WH3---LOOPIT)
-- 현재 **로컬 환경 기준 개발 및 테스트 완료**
-- Redis 기반 실시간 채팅 및 WebSocket 연동 완료
+### 1️⃣ Redis 실행 (채팅용)
+```bash
+# Ubuntu
+sudo apt install redis-server
+sudo service redis-server start
+redis-cli ping  # → PONG 응답 확인
+```
 
----
-
-## ⚙️ 환경 설정 및 실행 방법
-
-### ✅ 필수 설치 요소
-- Python 3.10 이상
-- Node.js 18 이상
-- Redis 서버 (백그라운드 실행 필수)
+> 📌 Windows에서는 WSL 설치 후 실행 권장  
+> 📌 macOS는 `brew install redis`
 
 ---
 
-### 🔧 백엔드 실행 방법 (Django)
-
+### 2️⃣ 백엔드 실행 (Django)
 ```bash
 cd backend
-
-# 가상환경 생성 및 실행
 python -m venv venv
-source venv/bin/activate  # (Windows: venv\Scripts\activate)
-
-# 패키지 설치
+source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-
-# 서버 실행
+python manage.py migrate
 python manage.py runserver
 ```
 
-🔐 *로컬 SQLite 기반 운영*  
-📌 Redis는 기본 포트(6379)에서 실행되어야 합니다.
-
 ---
 
-### 💻 프론트엔드 실행 방법 (React)
-
+### 3️⃣ 프론트엔드 실행 (React)
 ```bash
 cd frontend
-
-# 의존성 설치
 npm install
-
-# 개발 서버 실행
 npm start
 ```
 
-> 기본 실행 주소: `http://localhost:3000`
+> 접속: `http://localhost:3000`
 
 ---
 
-### 📦 Redis 설치 및 실행 (Linux 예시)
+## 💡 주요 기능
 
-```bash
-sudo apt update
-sudo apt install redis-server
-sudo service redis-server start
-redis-cli ping  # 👉 'PONG' 이 출력되면 정상 실행
+- ✅ 회원가입 및 로그인 (JWT 인증)
+- ✅ 상품 등록 / 조회 / 상세 페이지
+- ✅ 내가 등록한 상품 관리
+- ✅ WebSocket 기반 실시간 1:1 채팅
+- ⚠️ 채팅방 목록 / 신고 기능은 구현 예정
+
+---
+
+## 🔐 보안 설계
+
+| 항목             | 상태    | 설명 |
+|------------------|---------|------|
+| JWT 인증          | ✅ 적용  | access + refresh 토큰 사용 |
+| 사용자 권한 분리  | ✅ 적용  | 로그인 상태에 따라 버튼 노출 제한 |
+| WebSocket 인증    | ⚠️ 예정  | 현재는 sender만 전달됨, 추후 JWT 기반 검증 추가 예정 |
+| 민감정보 보호     | ✅ 적용  | 비밀번호는 Django 기본 해싱 처리 |
+| CSRF/XSS 대응     | ✅ 일부 적용 | 프론트엔드에서는 입력 필터링 필요 |
+
+---
+
+## 🧪 개발 환경
+
+| 항목       | 버전 / 도구 |
+|------------|-------------|
+| Python     | 3.10+       |
+| Django     | 5.2         |
+| Node.js    | 18+         |
+| React      | 18+         |
+| Redis      | 5.x 이상    |
+| SQLite     | 기본 내장 DB|
+
+---
+
+
+
+
+---
+
+## 📄 라이선스
+
+MIT License
+
+---
+
 ```
 
-> Windows 환경에서는 [Memurai](https://www.memurai.com/) 사용을 권장
-
 ---
 
-## 🔒 보안 사항
+이제 예쁘게 꾸며진 버전이야 😎  
+`README.md` 파일에 그대로 붙여넣고 `git add . && git commit -m "업데이트된 README 추가" && git push` 하면 완벽!
 
-| 항목             | 적용 상태 | 설명                                 |
-|------------------|-----------|--------------------------------------|
-| JWT 인증         | ✅ 적용     | 로그인/회원가입 시 액세스 토큰 발급 |
-| 비밀번호 해싱    | ✅ 적용     | Django 내장 해싱 처리               |
-| SecureStorage    | 🔜 예정     | 현재 localStorage 기반, 추후 개선 예정 |
-| HTTPS 통신       | 🔜 예정     | 현재 개발용 HTTP 기반               |
-
----
-
-## 🛠 사용 기술 스택
-
-| 기술       | 설명                          |
-|------------|-------------------------------|
-| React      | 프론트엔드 UI 개발            |
-| Django     | REST API 제공 (백엔드 서버)   |
-| WebSocket  | 실시간 채팅 통신              |
-| Redis      | 메시지 브로커 (Channels 사용) |
-| JWT        | 인증 방식                     |
-| SQLite     | 로컬 개발용 데이터베이스       |
-
----
-
-## 📎 프로젝트 목적
-
-- 보안 약점을 최소화한 웹 기반 실시간 거래 서비스 구현
-- 실제 사용자 관점에서 직관적인 UX 제공
-- GitHub 및 WSL 기반 협업 개발 환경 구성
-
----
+필요하다면 **영문 버전**, **데모 영상 포함 버전**, **로고 포함 버전**도 만들어줄 수 있어!  
+어떤 스타일로 확장할까?
